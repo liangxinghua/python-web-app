@@ -6,10 +6,16 @@
      <p>
          Please enter your Name:<br>
          {{form.name(size=80)}}<br>
+         {% for error in form.errors.name %}
+         <span style="color:red">{{error}}</span>
+         {% endfor %}
      </p>
      <p>
          Password:<br>
-         {{form.pwd()}}
+         {{form.pwd()}} <br>
+         {% for error in form.errors.pwd %}
+         <span style="color:red">{{error}}</span>
+         {% endfor %}
      </p>
      <p>
          {{form.remeber_me}} Remember me?
