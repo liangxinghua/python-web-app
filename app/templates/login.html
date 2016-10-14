@@ -5,16 +5,9 @@
      {{form.hidden_tag()}}
      <p>
          Please enter your Name:<br>
-         {{form.name(size=80)}}<br>
-         {% for error in form.errors.name %}
-         <span style="color:red">{{error}}</span>
-         {% endfor %}
-     </p>
-     <p>
-         Password:<br>
-         {{form.pwd()}} <br>
-         {% for error in form.errors.pwd %}
-         <span style="color:red">{{error}}</span>
+         {{form.user_name}}<br>
+         {% for error in form.errors.user_name %}
+         <span style="color:red">[-]{{error}}</span>
          {% endfor %}
      </p>
      <p>
@@ -22,7 +15,7 @@
      </p>
 
      <p>
-         <input type="submit" value="Sign In" >
+         {{form.submit}}
      </p>
  </form>
 {% endblock %}
