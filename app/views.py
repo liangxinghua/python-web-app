@@ -83,3 +83,8 @@ def sign_up():
         return redirect('/index')
     return render_template("sign-up.html",title="sign up",form=form)
 
+@app.error_handler(404)
+def page_not_found():
+    return render_template("page_not_fount.html"),404
+
+
