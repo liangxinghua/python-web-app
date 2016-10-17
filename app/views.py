@@ -5,7 +5,7 @@ import datetime
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import current_user, login_user, logout_user, login_required
 
-from forms import LoginForm,SignUpForm
+from forms import LoginForm,SignUpForm,PostForm
 from app import app, lm, db
 from app.models import User,Post
 
@@ -86,5 +86,28 @@ def sign_up():
 @app.error_handler(404)
 def page_not_found():
     return render_template("page_not_fount.html"),404
+
+
+@app.route('/publish', methods=["GET", "POST"])
+@login_required
+def publish():
+    form = PostForm()
+    post = Post()
+    if form.validate_on_submit():
+        post.title = request.form.get('title')
+        post.body = request.form.get('body')
+        post.timestamp = datetime.datetime.now()
+        post.user_id = current_user.id
+        try:
+            db.session.add(post)
+            db.session.commit()
+        except:
+            flash("database error!")
+            return url_for('publish')
+        flash("publish successful!")
+        return redirect(url_for('index'))
+
+    return render_template('publish.html', form=form)
+
 
 
