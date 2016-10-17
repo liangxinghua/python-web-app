@@ -16,6 +16,7 @@
        {% else%}
        | <a href="{{ url_for('logout') }}">logout</a>
        {% endif%}
+       | <a href="{{ url_for('publish')}}">publish</a>
    </div>
    <hr>
    {% with messages = get_flashed_messages() %}

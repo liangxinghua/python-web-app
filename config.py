@@ -10,6 +10,8 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 # SQLAlchemy-migrate 数据文件存储在这里
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
+SQLALCHEMY_TRACK_MODIFICATIONS = True
+
 CSRF_ENABLED = True
 
 SECRET_KEY = 'shi-yan-lou'

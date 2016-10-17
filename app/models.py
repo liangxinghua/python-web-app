@@ -27,12 +27,12 @@ class User(db.Model):
 
     # 唯一标识
     def get_id(self):
-        return  unicode(self.id)
+        return unicode(self.id)
 
     @classmethod
-    def login_check(cls,user_name):
-        user=cls.query.filter(
-            db.or_(User.nickname  == user_name,
+    def login_check(cls, user_name):
+        user = cls.query.filter(
+            db.or_(User.nickname == user_name,
                    User.email == user_name)
         ).first()
 
@@ -40,15 +40,14 @@ class User(db.Model):
             return None
         return user
 
-
-
     def __repr__(self):
         return '<User %r>' % (self.nickname)
 
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
+    title = db.Column(db.String(100), index=True)
+    body = db.Column(db.String(5000))
     timestamp = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
