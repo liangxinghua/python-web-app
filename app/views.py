@@ -5,9 +5,9 @@ import datetime
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import current_user, login_user, logout_user, login_required
 
-from forms import LoginForm,SignUpForm,PostForm
+from forms import LoginForm, SignUpForm, PostForm
 from app import app, lm, db
-from app.models import User,Post
+from app.models import User, Post
 
 
 @lm.user_loader
@@ -51,26 +51,26 @@ def logout():
     return redirect(url_for("index"))
 
 
-@app.route('/sign-up',methods=["GET","POST"])
+@app.route('/sign-up', methods=["GET", "POST"])
 def sign_up():
-    form=SignUpForm()
-    user=User()
+    form = SignUpForm()
+    user = User()
     if form.validate_on_submit():
-        user_name=request.form.get("user_name")
-        user_email=request.form.get("user_email")
-        if not len(user_name) and  not len(user_email):
+        user_name = request.form.get("user_name")
+        user_email = request.form.get("user_email")
+        if not len(user_name) and not len(user_email):
             flash("error: The user's name or email is invalid!")
 
-        register_check=User.query.filter(db.and_(User.nickname == user_name,
-                                                 User.email==user_email)
-                                         ).first()
-        if register_check :
+        register_check = User.query.filter(db.and_(User.nickname == user_name,
+                                                   User.email == user_email)
+                                           ).first()
+        if register_check:
             flash("error: The user's name or email already exists!")
             return redirect('/sign-up')
 
         try:
-            user.nickname=user_name
-            user.email=user_email
+            user.nickname = user_name
+            user.email = user_email
             db.session.add(user)
             db.session.commit()
             login_user(user)
@@ -81,11 +81,7 @@ def sign_up():
 
         flash("Sign up successful!")
         return redirect('/index')
-    return render_template("sign-up.html",title="sign up",form=form)
-
-@app.error_handler(404)
-def page_not_found():
-    return render_template("page_not_fount.html"),404
+    return render_template("sign-up.html", title="sign up", form=form)
 
 
 @app.route('/publish', methods=["GET", "POST"])
@@ -108,6 +104,3 @@ def publish():
         return redirect(url_for('index'))
 
     return render_template('publish.html', form=form)
-
-
-

@@ -6,5 +6,12 @@
 </head>
 <body>
   <h1>您找的页面跑丢了！！！！</h1>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages %}
+     <h2>{{ messae }}</h2>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
 </body>
 </html>
