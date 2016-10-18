@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content%}
+{% if posts %}
+<table>
+    <thead>
+    <tr>
+        <th>title</th>
+        <th>content</th>
+        <th>timestamp</th>
+    </tr>
+    </thead>
+{% for post in posts | reverse %}
+    <tr>
+        <td>{{post.title}}</td>
+        <td>{{post.body}}</td>
+        <td>{{post.timestamp | datetime_format}}</td>
+    </tr>
+{% endfor%}
+</table>
+{% endif%}
+{% endblock%}

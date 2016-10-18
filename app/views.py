@@ -8,6 +8,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from forms import LoginForm, SignUpForm, PostForm
 from app import app, lm, db
 from app.models import User, Post
+from app.decorator import templated
 
 
 @lm.user_loader
@@ -104,3 +105,10 @@ def publish():
         return redirect(url_for('index'))
 
     return render_template('publish.html', form=form)
+
+
+@app.route("/list")
+@templated()
+def list():
+    posts = Post.query.all()
+    return dict(posts = posts)

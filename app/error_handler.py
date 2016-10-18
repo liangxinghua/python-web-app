@@ -12,5 +12,5 @@ def page_not_found(error):
 
 
 @app.errorhandler(500)
-def inner_error(*args, **kv):
+def inner_error(error):
     return render_template("inner_error.html"), 500
