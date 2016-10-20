@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ url_for('app.static',filename='css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
     {% if title %}
     <title>{{title}} - myblog</title>
     {% else %}
@@ -20,11 +20,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="{{ url_for('index')}}"  class="navbar-brand">我的个人博客</a>
+                <a href="{{ url_for('app.index')}}"  class="navbar-brand">我的个人博客</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('index')}}">主页</a></li>
+                    <li><a href="{{ url_for('app.index')}}">主页</a></li>
                     <li><a href="/blog">博客</a> </li>
                     <li><a href="/about">关于</a> </li>
                 </ul>

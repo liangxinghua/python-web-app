@@ -2,13 +2,14 @@
 
 import datetime
 
-from flask import render_template, flash, redirect, session, url_for, request, g
+from flask import render_template, flash, redirect, url_for, request, make_response
 from flask_login import current_user, login_user, logout_user, login_required
 
+from app import front
+from comm import lm, db
+from decorator import templated
 from forms import LoginForm, SignUpForm, PostForm
-from app import app, lm, db
-from app.models import User, Post
-from app.decorator import templated
+from models import User, Post
 
 
 @lm.user_loader
@@ -16,15 +17,22 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-@app.route('/')
-@app.route('/index')
+@front.app_errorhandler(404)
+def page_not_found(error):
+    resp = make_response(render_template("app/404.html"), 404)
+    resp.headers["X-somthing"] = error
+    return resp
+
+
+@front.route('/')
+@front.route('/index')
 def index():
     user = current_user
     posts = Post.query.all()
-    return render_template("index.html", title="Home", user=user, posts=posts)
+    return render_template("app/index.html", title="Home", user=user, posts=posts)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@front.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect('/')
@@ -42,17 +50,17 @@ def login():
             flash('Login failed, Your name is not exist!')
             return redirect('/login')
 
-    return render_template("login.html", title="Sign In", form=form)
+    return render_template("app/login.html", title="Sign In", form=form)
 
 
-@app.route('/logout')
+@front.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("index"))
 
 
-@app.route('/sign-up', methods=["GET", "POST"])
+@front.route('/sign-up', methods=["GET", "POST"])
 def sign_up():
     form = SignUpForm()
     user = User()
@@ -82,10 +90,10 @@ def sign_up():
 
         flash("Sign up successful!")
         return redirect('/index')
-    return render_template("sign-up.html", title="sign up", form=form)
+    return render_template("app/sign-up.html", title="sign up", form=form)
 
 
-@app.route('/publish', methods=["GET", "POST"])
+@front.route('/publish', methods=["GET", "POST"])
 @login_required
 def publish():
     form = PostForm()
@@ -104,11 +112,11 @@ def publish():
         flash("publish successful!")
         return redirect(url_for('index'))
 
-    return render_template('publish.html', form=form)
+    return render_template('app/publish.html', form=form)
 
 
-@app.route("/list")
+@front.route("/list")
 @templated()
 def list():
     posts = Post.query.all()
-    return dict(posts = posts)
+    return dict(posts=posts)

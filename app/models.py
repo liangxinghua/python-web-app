@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from app import db
+from comm import db
 
 ROLE_USER = 0
 ROLE_ADMIN = 1

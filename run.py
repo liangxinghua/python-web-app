@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from app import app
+import config
+from __init__ import create_app
 
-app.run('localhost', port=8088,debug=True)
+if __name__ == "__main__":
+    app = create_app(config)
+
+    app.run('localhost', port=8088, debug=True)

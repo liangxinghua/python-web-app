@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h1>admin您找的页面跑丢了！！！！</h1>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages %}
+     <h2>{{ messae }}</h2>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+</body>
+</html>
