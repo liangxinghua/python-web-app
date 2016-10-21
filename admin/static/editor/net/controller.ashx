@@ -45,7 +45,7 @@ public class UEditorHandler : IHttpHandler
                     UploadFieldName = Config.GetString("videoFieldName")
                 });
                 break;
-            case "uploadfile":
+            case "uploadimage":
                 action = new UploadHandler(context, new UploadConfig()
                 {
                     AllowExtensions = Config.GetStringList("fileAllowFiles"),

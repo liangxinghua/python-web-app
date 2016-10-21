@@ -6,4 +6,4 @@ admin = Blueprint("admin", __name__, static_folder="static", static_url_path="/a
                   template_folder="templates",
                   url_prefix="/admin")
 
-from admin import views, models
+from admin import views, models,upload

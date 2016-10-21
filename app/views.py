@@ -2,7 +2,7 @@
 
 import datetime
 
-from flask import render_template, flash, redirect, url_for, request, make_response
+from flask import render_template, flash, redirect, url_for, request, make_response,send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
 
 from app import front
@@ -120,3 +120,8 @@ def publish():
 def list():
     posts = Post.query.all()
     return dict(posts=posts)
+
+@front.route("/upload/image/<imgname>")
+def show_img(imgname):
+    return send_from_directory("upload/image",imgname)
+

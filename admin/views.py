@@ -1,8 +1,10 @@
 # -*- coding:utf-8 -*-
+import json
+from flask import render_template, make_response, request
 
-from flask import render_template, make_response
 from admin import admin
-from models import Article
+from admin.upload.config import config
+from admin.upload.FileUpload import  FileUpload
 
 
 @admin.app_errorhandler(404)
@@ -25,3 +27,19 @@ def art_list():
 @admin.route("/article/publish", methods=["GET", "POST"])
 def art_publish():
     return render_template("admin/article/publish.html")
+
+
+@admin.route("/filehandler",methods=["GET","POST"])
+def filehandler():
+    action = request.args.get("action")
+    if action == "uploadimage":
+        if request.method=="POST":
+            file = request.files[config["imageFieldName"]]
+            print file
+            ul = FileUpload(file)
+            return json.dumps(ul.save_file())
+    elif action == "uploadfile":
+        pass
+    elif action=="config":
+        return json.dumps(config)
+    return "ok"

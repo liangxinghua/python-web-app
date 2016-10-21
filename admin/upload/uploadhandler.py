@@ -1,24 +1,17 @@
 # -*- oding:utf-8 -*-
 
+from flask import request
+
 from admin import admin
-
-options = {
-    "uploadimage": uploadimg,
-    "uploadfile": uploadfile,
-}
+from admin.upload import FileUpload
 
 
-
-
-
-def uploadimg():
-    pass
-
-
-def uploadfile():
-    pass
-
-
-@admin.route("/filehandler")
-def filehandler():
-    pass
+# @admin.route("/filehandler")
+# def filehandler():
+#     action = request["action"]
+#     if action == "uploadimage":
+#         file = request.files[0]
+#         upload = FileUpload(file)
+#         return  upload.save()
+#     elif action == "uploadfile":
+#         pass
