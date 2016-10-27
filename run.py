@@ -6,4 +6,4 @@ from __init__ import create_app
 if __name__ == "__main__":
     app = create_app(config)
 
-    app.run('localhost', port=8088, debug=True)
+    app.run('localhost', port=8090, debug=True)

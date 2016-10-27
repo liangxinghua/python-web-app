@@ -1,10 +1,12 @@
 # -*- coding:utf-8 -*-
 import json
+import os
+
 from flask import render_template, make_response, request
 
 from admin import admin
+from admin.upload.FileUpload import FileUpload
 from admin.upload.config import config
-from admin.upload.FileUpload import  FileUpload
 
 
 @admin.app_errorhandler(404)
@@ -29,17 +31,27 @@ def art_publish():
     return render_template("admin/article/publish.html")
 
 
-@admin.route("/filehandler",methods=["GET","POST"])
+@admin.route("/filehandler", methods=["GET", "POST"])
 def filehandler():
     action = request.args.get("action")
     if action == "uploadimage":
-        if request.method=="POST":
+        if request.method == "POST":
+            print request.form
             file = request.files[config["imageFieldName"]]
             print file
             ul = FileUpload(file)
             return json.dumps(ul.save_file())
     elif action == "uploadfile":
         pass
-    elif action=="config":
+    elif action == "config":
         return json.dumps(config)
+    return "ok"
+
+
+@admin.route("/upload", methods=["POST"])
+def file_upload():
+    if request.method == "POST":
+        file = request.files.get("file")
+        print len(file.read())
+        file.save(os.path.join(config["imagePathFormat"], file.filename))
     return "ok"

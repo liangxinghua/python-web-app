@@ -9,6 +9,11 @@
 <script type="text/javascript">
    var ue = UE.getEditor('editor');
 </script>
+
+<form action="/admin/upload"  id="upload" method = "POST" enctype = "multipart/form-data" encoding='multipart/form-data'>
+    <input type="file" name="file" value="上传" >
+    <input type="submit" value="提交" />
+</form>
 {% endblock %}
 {% block content %}
 <script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>

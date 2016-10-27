@@ -13,10 +13,10 @@ class FileUpload(object):
 
     def _allowed_file(self):
         return '.' in self.file.filename and \
-               '.' + self.file.filename.rsplit('.', 1)[1] in config["imageAllowFiles"]
+               '.' + self.file.filename.rsplit('.', 1)[1].lower() in config["imageAllowFiles"]
 
     def _check_size(self):
-        return len(self.file.read()) <= config["imageMaxSize"]
+        return 0 < len(self.file.read()) <= config["imageMaxSize"]
 
     def save_file(self):
         resp = {
@@ -30,12 +30,12 @@ class FileUpload(object):
             resp["state"] = upload_status["TypeNotAllow"]
             return resp
 
-        if not self._check_size():
-            resp["state"] = upload_status["SizeLimitExceed"]
-            return resp
+        # if not self._check_size():
+        #      resp["state"] = upload_status["SizeLimitExceed"]
+        #      return resp
         filename = secure_filename(self.file.filename)
         try:
-            path=os.path.join(config["imagePathFormat"])
+            path = os.path.join(config["imagePathFormat"])
             if not os.path.exists(path):
                 os.makedirs(path)
             self.file.save(os.path.join(config["imagePathFormat"], filename))
